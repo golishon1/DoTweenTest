@@ -7,10 +7,6 @@ public class LoadingAnimHigh : MonoBehaviour,ILoadingAnim
 {
     [SerializeField] private Transform[] _parts;
     [SerializeField] private Vector3 _scaleY;
-    void Start()
-    {
-        
-    }
 
 
     public void Loading()
@@ -18,14 +14,11 @@ public class LoadingAnimHigh : MonoBehaviour,ILoadingAnim
         var duration = 1f;
         var sequense = DOTween.Sequence();
 
-         
-        sequense.Append(_parts[0].DOScale(_scaleY, duration));
-        sequense.Append(_parts[1].DOScale(_scaleY, duration));
-        sequense.Append(_parts[2].DOScale(_scaleY, duration));
-        sequense.Append(_parts[3].DOScale(_scaleY, duration));
-        sequense.Append(_parts[4].DOScale(_scaleY, duration));
-        // _startPos = _dot.transform.position;
-        // sequense.Append(_dot.DOMove(_startPos, duration));
-        // sequense.Append(_dot.DOMove(_startPos + _pos + _pos + _pos, duration));
+        for (int i = 0; i < _parts.Length; i++)
+        {
+            sequense.Append(_parts[i].DOScale(_scaleY, 0.2f)).AppendInterval(0.2f)
+                .Join(_parts[i].DOScale(Vector3.one, 0.2f)).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+        }
+
     }
 }
